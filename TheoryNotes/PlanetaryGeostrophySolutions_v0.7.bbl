@@ -1,0 +1,44 @@
+\begin{thebibliography}{7}
+\providecommand{\natexlab}[1]{#1}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi:\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{doi:\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+
+\bibitem[{\textit{Klinger and Haine}(2019)}]{klinger&haine19}
+Klinger, B.~A., and T.~W.~N. Haine (2019), \textit{{Ocean Circulation in Three
+  Dimensions}}, 1st ed., Cambridge University Press, Cambridge, United Kingdom
+  and New York, NY, USA.
+
+\bibitem[{\textit{N{\o}st and Isachsen}(2003)}]{nost&isachsen03}
+N{\o}st, O.~A., and P.~E. Isachsen (2003), The large-scale time-mean ocean
+  circulation in the {Nordic Seas and Arctic Ocean} estimated from simplified
+  dynamics, \textit{J.~Mar.~Res.}, \textit{61}(2), 175--210,
+  \doi{10.1357/002224003322005069}.
+
+\bibitem[{\textit{Peterson and Callies}(2023)}]{peterson&callies23}
+Peterson, H.~G., and J.~Callies (2023), Coupling between abyssal boundary
+  layers and the interior ocean in the absence of along-slope variations,
+  \textit{J.~Phys.~Oceanogr.}, \textit{53}(1), 307--322,
+  \doi{10.1175/jpo-d-22-0082.1}.
+
+\bibitem[{\textit{Peterson and Callies}(in review)}]{peterson&callies26}
+Peterson, H.~G., and J.~Callies (in review), Connecting the local response to
+  abyssal mixing to the basin-scale circulation, \textit{J.~Phys.~Oceanogr.}
+
+\bibitem[{\textit{Salmon}(1998)}]{salmon98}
+Salmon, R. (1998), \textit{Lectures on Geophysical Fluid Dynamics}, Oxford
+  University Press, \doi{10.1093/oso/9780195108088.001.0001}.
+
+\bibitem[{\textit{Vallis}(2006)}]{vallis06}
+Vallis, G.~K. (2006), \textit{Atmospheric and Oceanic Fluid Dynamics:
+  Fundamentals and Large-scale Circulation}, 1st ed., 745 pp., Cambridge
+  University Press, Cambridge, United Kingdom and New York, NY, USA,
+  \doi{10.1017/cbo9780511790447}.
+
+\bibitem[{\textit{Waldman and Giordani}(2023)}]{waldman&giordani23}
+Waldman, R., and H.~Giordani (2023), Ocean barotropic vorticity balances:
+  Theory and application to numerical models, \textit{J.~Advances Model.~Earth
+  Sys.}, \textit{15}(4), \doi{10.1029/2022ms003276}.
+
+\end{thebibliography}

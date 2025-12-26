@@ -1,0 +1,47 @@
+This is BibTeX, Version 0.99d (TeX Live 2025)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: PlanetaryGeostrophySolutions_v0.7.aux
+The style file: agu04.bst
+Database file #1: toms_bib.bib
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+You've used 7 entries,
+            3098 wiz_defined-function locations,
+            1324 strings with 13381 characters,
+and the built_in function-call counts, 4450 in all, are:
+= -- 418
+> -- 147
+< -- 7
++ -- 70
+- -- 36
+* -- 327
+:= -- 465
+add.period$ -- 7
+call.type$ -- 7
+change.case$ -- 32
+chr.to.int$ -- 7
+cite$ -- 21
+duplicate$ -- 453
+empty$ -- 317
+format.name$ -- 63
+if$ -- 892
+int.to.chr$ -- 1
+int.to.str$ -- 1
+missing$ -- 64
+newline$ -- 28
+num.names$ -- 28
+pop$ -- 172
+preamble$ -- 1
+purify$ -- 26
+quote$ -- 0
+skip$ -- 246
+stack$ -- 0
+substring$ -- 119
+swap$ -- 327
+text.length$ -- 0
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 54
+warning$ -- 0
+while$ -- 27
+width$ -- 0
+write$ -- 87

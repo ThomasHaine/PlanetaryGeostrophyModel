@@ -1,0 +1,705 @@
+\documentclass[10pt]{amsart}
+\usepackage{geometry}                % See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   % ... or a4paper or a5paper or ... 
+%\geometry{landscape}                % Activate for for rotated page geometry
+%\usepackage[parfill]{parskip}    % Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}
+\usepackage{amssymb}
+\usepackage{epstopdf}
+\usepackage{natbib}
+\DeclareGraphicsRule{.tif}{png}{.png}{`convert #1 `dirname #1`/`basename #1 .tif`.png}
+
+\title{Some Solutions to the Planetary Geostrophic Equations}
+\author{TWNH}
+\date{\today}                                           % Activate to display a given date or no date
+
+\begin{document}
+\maketitle
+
+\citet{peterson&callies26} (see also \citealt{peterson&callies23}) consider how bottom-intensified vertical mixing induces a basin-scale circulation in various simple non-flat-bottomed basins.
+They write equations for a bottom Ekman layer and couple them to an equation for the geostrophic contour vorticity balance, in the parlance of \citet{waldman&giordani23}, which is a type of barotropic vorticity equation.
+
+\section{Governing Equations}
+The flow satisfies the (non-dimensional) planetary-geostrophic and hydrostatic equations:
+\begin{align}
+- f v & = - \frac{\partial p}{\partial x} + \epsilon^2 \frac{\partial}{\partial z} \left( \nu \frac{\partial u}{\partial z} \right), \label{eqn:u_mom} \\
+f  u & = - \frac{\partial p}{\partial y} + \epsilon^2 \frac{\partial}{\partial z} \left( \nu \frac{\partial v}{\partial z} \right),  \label{eqn:v_mom} \\
+\frac{\partial p}{\partial z} & = b
+\end{align}
+(see Eqs.~(9)--(11) of \citealt{peterson&callies26} and Eq.~(3.26) of \citealt{klinger&haine19}).
+The flow is non-divergent:
+\begin{align}
+\nabla \cdot {\mathbf u} & = 0 ,
+\end{align}
+and the buoyancy field satisfies the advection-diffusion equation
+\begin{align}
+\mu \rho \left( \frac{\partial b}{\partial t} + {\mathbf u} \cdot \nabla b \right) = \epsilon^2 \frac{\partial }{\partial z} \left( \kappa \frac{\partial b}{\partial z} \right) .
+\label{eqn:b}
+\end{align}
+(see Eqs.~(11)--(13) of \citealt{peterson&callies26}).
+The boundary conditions on buoyancy are:
+\begin{align}
+\text{Surface~}z = 0:
+b &= 0
+\label{eqn:sfc_b_bc}
+ \\
+\text{Bottom~}z = -H:
+\frac{\partial b}{\partial z} &= 0 ,
+\label{eqn:bot_b_bc}
+\end{align}
+and the initial condition is $b = z$.
+
+The diffusivity and viscosity are given by
+\begin{align}
+\kappa(z) & = \kappa_0 + \exp \left( - \alpha (z + H) \right) , \label{eqn:kappa_def} \\
+\nu & = \text{constant}
+\end{align}
+\citet{peterson&callies26} Eq.~(17).
+
+\section{Vertically-Integrated Flow}
+The vertically-integrated flow $(U, V)$ is given by:
+\begin{align}
+U & \equiv \int_{-H}^{0} u \; dz = - \int_{-H}^0 z \partial_z u \; dz , \nonumber \\
+V & \equiv \int_{-H}^{0} v \; dz = - \int_{-H}^0 z \partial_z v \; dz ,
+\label{eqn:UV_defs}
+\end{align}
+exploiting the bottom boundary condition on $(u, v)$.
+The equations for $(U, V)$ come from vertically integrating the momentum equations (\ref{eqn:u_mom}), (\ref{eqn:v_mom}):
+\begin{align}
+- f V & = -  \int_{-H}^{0} \frac{\partial p}{\partial x} \; dz + \epsilon^2   \int_{-H}^{0} \frac{\partial}{\partial z} \left( \nu \frac{\partial u}{\partial z} \right) \; dz \label{eqn:U_mom0} \\
+f  U & = -  \int_{-H}^{0} \frac{\partial p}{\partial y} \; dz + \epsilon^2  \int_{-H}^{0} \frac{\partial}{\partial z} \left( \nu \frac{\partial v}{\partial z} \right) \; dz . \label{eqn:V_mom0}
+\end{align}
+The depth-integrated pressure gradient in the $x$ direction is:
+\begin{align}
+ \int_{-H}^{0} \frac{\partial p}{\partial x} \; dz & = - \frac{\partial H}{\partial x} p(x,z = -H) +  \frac{\partial }{\partial x} \int_{-H}^0 p \; dz , \\
+ & = - p_b \frac{\partial H}{\partial x} + \frac{\partial }{\partial x} \left[ p_b H - \int_{-H}^0 z \frac{\partial p}{\partial z}  \right], \\
+  & = H \frac{\partial p_b}{\partial x} - \frac{\partial }{\partial x} \int_{-H}^0 z b \; dz ,
+ \end{align}
+ using the Liebniz integration formula\footnote{The Liebniz integration formula reads:
+ \begin{align}
+ \partial_x \left( \int_{a(x)}^{b(x)} f(x,y) \; dy \right) = \partial_x b f(x,b(x)) - \partial_x a f(x,a(x)) +  \int_{a(x)}^{b(x)} \partial_x f(x, y) \; dy . \nonumber
+ \end{align}
+ }, where $p_b = p(x,-H(x))$ is the bottom pressure, and integration by parts\footnote{
+ Integration by parts gives:
+ \begin{align}
+\int_{-H}^0 z \frac{\partial p}{\partial z} \; dz & = \left[ z p \right]_{-H}^0 -   \int_{-H}^0 p \; dz , \nonumber \\ 
+& = p_b H -  \int_{-H}^0 p \; dz . \nonumber
+ \end{align}
+ }.
+ The viscous term in the $x$ direction is:
+ \begin{align}
+  \int_{-H}^{0} \frac{\partial}{\partial z} \left( \nu \frac{\partial u}{\partial z} \right) \; dz & = \left[  \nu \frac{\partial u}{\partial z}  \right]_{-H}^{0}  = \frac{\tau^x}{ \epsilon^2}  - \left. \nu \frac{\partial u}{\partial z} \right|_{z = -H} ,
+ \end{align}
+which uses the boundary condition (\ref{eqn:sfc_bcs}).
+  
+ Therefore (\ref{eqn:U_mom0}) and (\ref{eqn:V_mom0}) lead to:
+ \begin{align}
+- f V & =  - H \frac{\partial p_b}{\partial x} - \frac{\partial \chi}{\partial x}  - \tau^x_b + \tau^x , \label{eqn:U_mom} \\
+f  U & = - H \frac{\partial p_b}{\partial y} - \frac{\partial \chi }{\partial y}  - \tau^y_b + \tau^y \label{eqn:V_mom} ,
+\end{align}
+where
+\begin{align}
+\chi & = - \int_{-H}^0 z b \; dz
+\label{eqn:baroclinic_PE}
+\end{align}
+is the baroclinic potential energy, and $\epsilon^2  \nu \left. \partial_z (u,v) \right|_{z = -H}  \equiv (\tau^x_b, \tau^y_b) = \tau_b$ is the bottom stress on the fluid.
+
+Next, divide by water depth $H$:
+ \begin{align}
+- \frac{f V}{H} & =  - \frac{\partial p_b}{\partial x} - \frac{1}{H} \frac{\partial \chi}{\partial x} + \frac{\tau^x - \tau^x_b}{H}   \\
+\frac{f  U}{H} & = - \frac{\partial p_b}{\partial y} - \frac{1}{H} \frac{\partial \chi }{\partial y} + \frac{\tau^y - \tau^y_b}{H} ,
+\end{align}
+and take the curl\footnote{
+Recall that 
+\begin{align}
+{\hat{\mathbf z}} \cdot \left( \nabla \times {\mathbf U} \right) & = \partial_x V - \partial_y U .
+\end{align}
+}
+ \begin{align}
+\frac{\partial}{\partial y} \left\{- \frac{f V}{H} \right\}  - \frac{\partial}{\partial x} \left\{\frac{f  U}{H} \right\} & = 
+\frac{\partial}{\partial y} \left\{ - \frac{\partial p_b}{\partial x} - \frac{1}{H} \frac{\partial \chi}{\partial x}  + \frac{\tau^x - \tau^x_b}{H} \right\} \nonumber. \\
+& -  \frac{\partial}{\partial x} \left\{ - \frac{\partial p_b}{\partial y} - \frac{1}{H} \frac{\partial \chi }{\partial y}  + \frac{\tau^y - \tau^y_b}{H} \right\}, \\
+\implies
+\frac{\partial}{\partial y} \left\{- \frac{f }{H} \frac{\partial \Psi}{\partial x} \right\}  + \frac{\partial}{\partial x} \left\{\frac{f }{H} \frac{\partial \Psi}{\partial y} \right\} & = 
+- \frac{\partial}{\partial y} \left\{ \frac{1}{H} \frac{\partial \chi}{\partial x} \right\} + \frac{\partial}{\partial x} \left\{ \frac{1}{H} \frac{\partial \chi }{\partial y}  \right\}  - {\hat{\mathbf z}} \cdot \left( \nabla \times \frac{{\mathbf \tau - \tau_b}}{H} \right), \nonumber \\
+\implies
+- \frac{\partial}{\partial y} \left(\frac{f }{H} \right) \, \frac{\partial \Psi}{\partial x}  + \frac{\partial}{\partial x} \, \left( \frac{f }{H}  \right) \frac{\partial \Psi}{\partial y} & = 
+- \frac{\partial}{\partial y} \left( \frac{1}{H} \right) \, \frac{\partial \chi}{\partial x} + \frac{\partial}{\partial x} \, \left( \frac{1}{H} \right) \frac{\partial \chi }{\partial y}   - {\hat{\mathbf z}} \cdot \left( \nabla \times \frac{{\mathbf \tau - \tau_b}}{H} \right), \label{eqn:GCVB0} \\
+\implies
+J\left( \frac{f}{H} , \Psi \right)  & =  J \left( \frac{1}{H}, \chi \right)
+- {\hat{\mathbf z}} \cdot \left( \nabla \times \frac{{\mathbf \tau - \tau_b}}{H} \right) ,
+\label{eqn:GCVB}
+\end{align}
+for streamfunction of the depth-integrated horizontal flow $\Psi$ where
+\begin{align}
+V & = \phantom{-} \frac{\partial \Psi}{\partial x}, \nonumber \\
+U & = - \frac{\partial \Psi}{\partial y} ,
+\end{align}
+and Jacobian $J(A,B) = \partial_x A \, \partial_y B - \partial_y A \, \partial_x B$.
+Notice how this recipe (vertically integrate, divide by $H$, then take the curl) eliminates the bottom pressure.
+The final result (\ref{eqn:GCVB}) is the same as Eq.~(20) of \citet{peterson&callies26}.
+It is called (a simplified form of) the \textbf{geostrophic contour vorticity balance} (GCVB) by \citet{waldman&giordani23}, although \citet{peterson&callies26} call it the ``barotropic vorticity equation''.
+It is not the same equation as used by \citet{nost&isachsen03} (which \citet{waldman&giordani23} call the ``transport divergence vorticity balance'').
+
+Notice how the GCVB (\ref{eqn:GCVB}) is an equation for the streamfunction of the depth-integrated flow $\Psi$ given the buoyancy field (and hence the JEBAR term) and the surface and bottom stresses.
+The GCVB shows how depth-integrated flow $\Psi$ across $f/H$ contours is driven by (i) the joint effect of baroclinicity and relief (JEBAR), (ii) curl of wind stress divided by $H$, (iii) curl of the bottom stress divided by $H$.
+
+\section{Solution to Frictional Geostrophic Equations in Steady State}
+Start from (\ref{eqn:u_mom})--(\ref{eqn:v_mom}) and write the pressure as
+\begin{align}
+p(x,y,z) & = p_s(x,y) + \int_{z}^{0} b(x,y,z') \; dz' , \label{eqn:hydrostatic_p} \\
+\implies \partial_x p(x,y,z) & = \partial_x p_s (x, y) + \int_{z}^{0} \partial_x b(x,y,z') \; dz'  \label{eqn:hydrostatic_p_pgf} \\
+\implies p_b(x, y) & \equiv p(x, y, z=-H(x,y)) = p_s(x,y) + \int_{-H(x,y)}^{0} b(x,y,z') \; dz' , \label{eqn:pb} 
+\end{align}
+where $p_s(x,y)$ is the surface pressure (and assuming that $p_s \ll p(-H)$).
+Solve these frictional geostrophic equations using a Green's function, defined so that $\mathfrak{u} = u + i v$, thus
+\begin{align}
+\epsilon^2 \frac{\partial}{\partial z} \left( \nu  \frac{\partial \mathfrak{u}}{\partial z} \right)  - i f  \mathfrak{u} & = \mathfrak{f} ,  \\
+\text{Surface~}z = 0:
+\epsilon^2 \nu \partial_z \mathfrak{u} & = \tau^x + i \tau^y , \label{eqn:sfc_bcs}
+ \\
+\text{Bottom~}z = -H:
+\mathfrak{u} & = 0 ,
+\end{align}
+where $\mathfrak{f} = \frac{\partial p}{\partial x} +  i \frac{\partial p}{\partial y}$ is the pressure gradient from (\ref{eqn:hydrostatic_p_pgf}).
+
+The corresponding Green's function satisfies:
+\begin{align}
+\epsilon^2 \frac{\partial}{\partial z} \left( \nu  \frac{\partial G_\mathfrak{u}}{\partial z} \right)  - i f  G_\mathfrak{u} & = \delta(z - \xi) ,  \\
+\text{Surface~}z = 0:
+\epsilon^2 \nu \partial_z G_\mathfrak{u} & = 0 ,
+ \\
+\text{Bottom~}z = -H:
+G_\mathfrak{u} & = 0 .
+\end{align}
+We find that the solution for constant viscosity $\nu = \nu_0$ is:  
+\begin{align}
+ G_{ \mathfrak{u}}(z;\xi) & = 
+\frac{ i^{3/2} \mathrm{e}^{- \sqrt{i} \varphi (z + \xi)} }{2  \nu_0 \epsilon^2 \varphi  \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} \right)}
+\begin{cases} 
+\displaystyle - \mathrm{e}^{2 \sqrt{i} \varphi \xi} + \mathrm{e}^{2 \sqrt{i} \varphi \left( z + H(x)\right)} + \mathrm{e}^{2 \sqrt{i} \varphi \left( z + \xi + H(x)\right)} - 1
+ & \text{for}\: z \leq \xi , \\
+\displaystyle - \mathrm{e}^{2 \sqrt{i} \varphi z} + \mathrm{e}^{2 \sqrt{i} \varphi \left( \xi + H(x)\right)} + \mathrm{e}^{2 \sqrt{i} \varphi \left( z + \xi + H(x)\right)} - 1
+ & \text{for}\: z \geq \xi ,
+\end{cases} , \label{eqn:FG_Gsfn} \\
+\implies  G_{ \mathfrak{u}}(z;0) & = 
+\frac{ i^{3/2} \mathrm{e}^{- \sqrt{i} \varphi z } }{ \nu_0 \epsilon^2 \varphi  \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} \right))}
+\left[ \mathrm{e}^{2 \sqrt{i} \varphi ( z  + H{\left(x \right))}} - 1 \right] , \nonumber \\
+\implies \partial_z \left. G_{ \mathfrak{u}}(z;\xi) \right|_{z = -H(x)} & = 
+\frac{- \mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } }{ \nu_0 \epsilon^2 \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} \right)}
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) , \label{eqn:FG_Gsfn_bottom_deriv} \\
+\implies \partial_z \left. G_{ \mathfrak{u}}(z;0) \right|_{z = -H(x)} & = 
+\frac{- 2 \mathrm{e}^{\sqrt{i} \varphi H(x)  } }{ \nu_0 \epsilon^2 \left(1 + \mathrm{e}^{2 \sqrt{-i} \varphi H \left(x \right)} \right)}
+ , \label{eqn:FG_Gsfn_bottom_deriv_top}
+\end{align}
+where $\varphi = \sqrt{\left( f / \nu_0 \right) } / \epsilon$ (see \texttt{Example\_barotropic\_GeostrophicFlow\_v0.2.ipynb}).
+And then 
+\begin{align}
+\mathfrak{u} (z;x) & = \int_{-H(x)}^{0} G_{ \mathfrak{u}} (z; \xi) \left[ \partial_x p( \xi; x) + i \partial_y p( \xi; x) \right] \; d \xi 
+ -   G_{\mathfrak{u}} (z; 0)  \left( \tau^x + i \tau^y \right)  ,
+\end{align}
+The baroclinic pressure (due to $b$) adds to the barotropic pressure (due to $p_s(x,y)$) in the integrand of this expression. 
+Otherwise, everything else is known (remember that $x$ in these expressions stands for $(x,y)$ in general).
+
+Also, the bottom current gradient is given by
+\begin{align}
+-\partial_z \left. \mathfrak{u} (z;x) \right|_{z = -H(x)} & =  \int_{-H(x)}^{0} 
+ \frac{ \mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } }{ \nu_0 \epsilon^2 \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} \right)}
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+ \left[ \partial_x p( \xi; x) + i \partial_y p( \xi; x) \right] \; d \xi \nonumber \\
+& - \frac{ 2 \mathrm{e}^{\sqrt{i} \varphi H(x)  } }{ \nu_0 \epsilon^2 \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} \right)}
+\left( \tau^x + i \tau^y \right) ,
+\end{align}
+using (\ref{eqn:FG_Gsfn_bottom_deriv}) and (\ref{eqn:FG_Gsfn_bottom_deriv_top}), and therefore the bottom stress $\tau_b$ on the fluid is
+\begin{align}
+\tau_b = - \nu_0 \epsilon^2 \partial_z \left. \mathfrak{u} (z;x) \right|_{z = -H(x)} & = \int_{-H(x)}^{0} 
+\frac{ \mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } }{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} }
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+ \left[ \partial_x p( \xi; x) + i \partial_y p( \xi; x) \right] \; d \xi \nonumber \\
+&-\frac{ 2 \mathrm{e}^{\sqrt{i} \varphi H(x)  } }{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} }
+ \left( \tau^x + i \tau^y \right) .
+ \label{eqn:bottom_stress_expression}
+ \end{align}
+Notice how the derivatives of the surface pressure part of $p$ end up multiplying expressions that are functions of $x$.
+
+\section{Frictional Geostrophic Equations Closure with the GCVB Equation}
+
+The problem is closed using the GCVB equation, as follows (\citealt{salmon98}, p.~170).
+This determines the unknown surface pressure field given the surface stress (and vice versa).
+In particular, work from (\ref{eqn:U_mom})--(\ref{eqn:V_mom}),
+\begin{align}
+\mathfrak{U} (z;x) & \equiv U + i V = \int_{-H(x)}^{0} \mathfrak{u} (z;x) \; dz , \label{eqn:depth_integrated_flow_def} \\
+& = \int_{-H(x)}^0 \left\{ \int_{-H(x)}^{0} G_{ \mathfrak{u}} (z; \xi) \left[ \partial_x p( \xi; x) + i \partial_y p( \xi; x) \right] \; d \xi 
+-  G_{\mathfrak{u}} (z; 0)  \left( \tau^x + i \tau^y \right)  \right\} \; dz.
+\end{align}
+Computing the $z$ integral of the Green's function $G_{\mathfrak{u}} (z; \xi)$\footnote{This presumes (correctly) that the denominator in (\ref{eqn:FG_Gsfn}) does not vanish.} gives 
+\begin{align}
+\int_{-H(x)}^0 G_{ \mathfrak{u}}(z;\xi) \; dz & = 
+\frac{- i \mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+} { \nu_0 \epsilon^2 \varphi^2  \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)} , \nonumber \\
+\implies \int_{-H(x)}^0 G_{ \mathfrak{u}}(z;0) \; dz & = 
+\frac{ - i \left( 
+\mathrm{e}^{\sqrt{i} \varphi  H(x) }   - 1   
+\right)^2
+} { \nu_0 \epsilon^2 \varphi^2  \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)} .
+\end{align}
+Therefore,
+\begin{align}
+\mathfrak{U} (x) & = 
+\frac{-i }{{ \nu_0 \epsilon^2 \varphi^2  \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)} } \times \nonumber \\
+&\left\{
+ \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+ \left[ \partial_x p( \xi; x) + i \partial_y p( \xi; x) \right] \; d \xi  \right. \nonumber  \\
+& - \left.
+\left( 
+\mathrm{e}^{\sqrt{i} \varphi  H(x) }   - 1   
+\right)^2
+\left( \tau^x + i \tau^y \right)   \right\}.
+\label{eqn:UV_expression}
+\end{align}
+
+Eqns.~(\ref{eqn:U_mom}) and (\ref{eqn:V_mom}) also imply that:
+\begin{align}
+i f \mathfrak{U} & = - H \left(\frac{\partial p_b}{\partial x} + i \frac{\partial p_b}{\partial y} \right) - \left(\frac{\partial \chi }{\partial y} + i \frac{\partial \chi}{\partial x}  \right)  + \tau^x + i \tau^y  - \tau^x_b - i \tau^y_b .
+\label{eqn:complex_vertical_int_momentum}
+\end{align}
+Therefore, for an unstratified fluid ($\chi = 0, \nabla p_b = \nabla p_s$), specifying the surface pressure gradient $\nabla p_s$ closes the problem. 
+We compute the surface stress from (\ref{eqn:complex_vertical_int_momentum}) by substituting (\ref{eqn:bottom_stress_expression}).
+Then $u(z), v(z), U, V$ and the force balance can all be computed. 
+See Figure \ref{fig:example_soln} for an example calculation.
+Alternatively, the surface stress can be specified, and the pressure gradient can be computed (see \texttt{Example\_barotropic\_GeostrophicFlow\_v0.3.ipynb}).
+In practice, it seems that the bottom stress always vanishes. Why??  Is this correct??
+
+\begin{figure}
+\centering
+\includegraphics[width=9cm]{Example_barotropic_GeostrophicFlow_v0.2.ipynb_VerticalProfiles.pdf}
+\includegraphics[width=12cm]{Example_barotropic_GeostrophicFlow_v0.2.ipynb_Hodograph.pdf}
+\includegraphics[width=12cm]{Example_barotropic_GeostrophicFlow_v0.2.ipynb_TermBalance.pdf}
+\caption{\label{fig:example_soln} Example solution to the barotropic frictional geostrophic flow problem from \texttt{Example\_barotropic\_GeostrophicFlow\_v0.2.ipynb}.}
+\end{figure}
+
+
+For a stratified fluid, $b$ and hence $\chi$ (from (\ref{eqn:baroclinic_PE})) are specified. 
+The total pressure field $p(x,y,z)$ consists of a known buoyancy-driven piece (baroclinic) and a surface pressure driven piece from (\ref{eqn:hydrostatic_p_pgf}).
+Similarly, the bottom pressure field $p_b(x,y)$ consists of a known buoyancy-driven piece and a surface pressure driven piece from (\ref{eqn:pb}).
+Thus, (\ref{eqn:complex_vertical_int_momentum}) leads to:
+\begin{align}
+i f \mathfrak{U}(x) & = - H(x) \left(\frac{\partial}{\partial x} + i \frac{\partial}{\partial y} \right)
+\left[ 
+p_s(x) + \int_{-H(x)}^{0} b(x,z') \; dz'
+\right] \nonumber \\
+& - \left(\frac{\partial }{\partial y} + i \frac{\partial}{\partial x}  \right)  
+\left[
+ - \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right]
++ \tau_s(x)  - \tau_b (x) .
+ \end{align}
+ Substituting for $\mathfrak{U}$ from (\ref{eqn:UV_expression}) and rewriting $\phi^2 = f / (\nu_0 \epsilon^2)$ gives:
+ \begin{align}
+& \frac{1 }{{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} } } 
+\left\{
+ \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+ \left( \partial_x  + i \partial_y  \right) p( \xi; x)  \; d \xi  \right. \nonumber \\
+& - \left.
+\left( 
+\mathrm{e}^{\sqrt{i} \varphi  H(x) }   - 1   
+\right)^2
+\tau_s (x)  \right\} 
+= - H(x)  \left( \partial_x  + i \partial_y  \right)
+\left[ 
+p_s(x) + \int_{-H(x)}^{0} b(x,z') \; dz'
+\right] \nonumber \\
+& -  \left( \partial_y  + i \partial_x  \right)
+\left[
+ - \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right]
++ \tau_s (x)  - \tau_b (x) .
+\end{align}
+And substituting for the bottom stress $\tau_b$ from (\ref{eqn:bottom_stress_expression})
+ \begin{align}
+& \frac{1 }{{1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} } } 
+\left\{
+ \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+ \left( \partial_x  + i \partial_y  \right) p( \xi; x) \; d \xi  \right. \nonumber \\
+& - \left.
+\left( 
+\mathrm{e}^{\sqrt{i} \varphi  H(x) }   - 1   
+\right)^2
+\tau_s (x)   \right\} 
+ =
+ \tau_s (x)
+ - H(x) \left( \partial_x  + i \partial_y  \right)
+\left[ 
+p_s(x) + \int_{-H(x)}^{0} b(x,z') \; dz'
+\right] \nonumber \\
+& - \left( \partial_y  + i \partial_x  \right)
+\left[
+ - \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right] \nonumber \\
+&- 
+\int_{-H(x)}^{0} 
+\frac{ \mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } }{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} }
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+ \left( \partial_x  + i \partial_y \right) p( \xi; x)  \; d \xi 
++\frac{ 2 \mathrm{e}^{\sqrt{i} \varphi H(x)  } }{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} }
+\tau_s (x)
+. \nonumber
+\end{align}
+Thus, substituting for the hydrostatic pressure from (\ref{eqn:hydrostatic_p_pgf}):
+ \begin{align}
+& \frac{1}{{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} } } \times \nonumber \\
+& \left\{
+ \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+ \left( \partial_x  + i \partial_y  \right)
+\left[
+ p_s (x) + \int_{\xi}^{0} b(x,z') \; dz'  \right]
+ \; d \xi   \right. \nonumber \\
+& - \left.
+\left( 
+\mathrm{e}^{\sqrt{i} \varphi  H(x) }   - 1   
+\right)^2
+\tau_s (x)  \right\} 
+ = \tau_s (x) - H(x) \left( \partial_x  + i \partial_y  \right)
+\left[ 
+p_s(x) + \int_{-H(x)}^{0} b(x,z') \; dz'
+\right] \nonumber \\
+& -  \left( \partial_y  + i \partial_x  \right)
+\left[
+ - \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right] \nonumber \\
+&- 
+\int_{-H(x)}^{0} 
+\frac{ \mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } }{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} }
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+  \left( \partial_x  + i \partial_y  \right)
+\left[
+ p_s (x) + \int_{\xi}^{0} b(x,z') \; dz'  \right]
+ \; d \xi \nonumber \\
+& +
+\frac{ 2 \mathrm{e}^{\sqrt{i} \varphi H(x)  } }{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} }
+\tau_s (x)
+. \nonumber
+\end{align}
+Rearranging to factor $\tau_s (x)$ terms on the right gives:
+ \begin{align}
+& \frac{1}{{1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} } } \times \nonumber \\
+& \left\{
+ \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+ \left( \partial_x  + i \partial_y  \right)
+\left[
+ p_s (x) + \int_{\xi}^{0} b(x,z') \; dz'  \right]
+ \; d \xi   \right\} \nonumber \\
+& = 2 \tau_s (x) 
+ - H(x) \left( \partial_x + i \partial_y  \right)
+\left[ 
+p_s(x) + \int_{-H(x)}^{0} b(x,z') \; dz'
+\right] \nonumber \\
+& -  \left( \partial_y  + i \partial_x  \right)
+\left[
+ - \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right] \nonumber \\
+&- 
+\int_{-H(x)}^{0} 
+\frac{ \mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } }{ 1 + \mathrm{e}^{2 \sqrt{i} \varphi H \left(x \right)} }
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+  \left( \partial_x  + i \partial_y  \right)
+\left[
+ p_s (x) + \int_{\xi}^{0} b(x,z') \; dz'  \right]
+ \; d \xi 
+. \nonumber
+\end{align}
+Hence, manipulating,
+ \begin{align}
+& 
+ \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+ \left( \partial_x  + i \partial_y  \right)
+\left[
+ p_s (x) + \int_{\xi}^{0} b(x,z') \; dz'  \right]
+ \; d \xi    \nonumber \\
+& = 
+\left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)
+\left[ 
+2 \tau_s (x) 
+ - H(x) \left( \partial_x + i \partial_y  \right)
+\left[ 
+p_s(x) + \int_{-H(x)}^{0} b(x,z') \; dz'
+\right] +  \left( \partial_y  + i \partial_x  \right)
+ \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right]
+\nonumber \\
+&- 
+\int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } 
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+  \left( \partial_x  + i \partial_y  \right)
+\left[
+p_s(x)  + \int_{\xi}^{0} b(x,z') \; dz'  \right]
+ \; d \xi 
+. \nonumber
+\end{align}
+Hence, breaking apart the integrals:
+ \begin{align}
+& 
+ \left( \partial_x  + i \partial_y  \right) p_s (x) \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right) \; d \xi    \nonumber \\
+& +  \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+ \left( \partial_x  + i \partial_y  \right)
+ \int_{\xi}^{0} b(x,z') \; dz' 
+ \; d \xi   \nonumber \\
+& = 
+\left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)
+\left[ 
+2 \tau_s (x) 
+ - H(x) \left( \partial_x + i \partial_y  \right)
+\left[ 
+p_s(x) + \int_{-H(x)}^{0} b(x,z') \; dz'
+\right] +  \left( \partial_y  + i \partial_x  \right)
+ \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right]
+\nonumber \\
+&- 
+  \left( \partial_x  + i \partial_y  \right)
+ p_s (x) 
+ \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } 
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+ \; d \xi 
+\nonumber \\
+&- 
+\int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } 
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+  \left( \partial_x  + i \partial_y  \right)
+ \int_{\xi}^{0} b(x,z') \; dz'  
+ \; d \xi 
+. \nonumber
+\end{align}
+Moving the surface pressure terms to the left gives:
+ \begin{align}
+& 
+ \left( \partial_x  + i \partial_y  \right) p_s (x) \left\{  \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right) + \mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } 
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+\; d \xi    + \right. \nonumber \\
+&\left. 
+ \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)
+H(x) \right\} \nonumber \\
+& = 
+\left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)
+\left[ 
+2 \tau_s (x) 
+ - H(x) \left( \partial_x + i \partial_y  \right)
+ \int_{-H(x)}^{0} b(x,z') \; dz'
+ +  \left( \partial_y  + i \partial_x  \right)
+ \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right]
+\nonumber \\
+&- 
+\int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } 
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+  \left( \partial_x  + i \partial_y  \right)
+ \int_{\xi}^{0} b(x,z') \; dz'  
+ \; d \xi 
+ \nonumber \\
+ & -  \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right)
+ \left( \partial_x  + i \partial_y  \right)
+ \int_{\xi}^{0} b(x,z') \; dz' 
+ \; d \xi   \nonumber 
+\end{align}
+Manipulating the terms gives:
+ \begin{align}
+& 
+ \left( \partial_x  + i \partial_y  \right) p_s (x) \left\{  \int_{-H(x)}^{0} 
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right) + \mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } 
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+\; d \xi    + \right. \nonumber \\
+&\left. 
+ \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)
+H(x) \right\} \nonumber \\
+& = 
+\left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)
+\left[ 
+2 \tau_s (x) 
+ - H(x) \left( \partial_x + i \partial_y  \right)
+ \int_{-H(x)}^{0} b(x,z') \; dz'
+ +  \left( \partial_y  + i \partial_x  \right)
+ \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right] -
+\nonumber \\
+ & \int_{-H(x)}^{0} 
+\left[ \mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H(x)} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H(x) \right)} - 1
+\right) +
+\mathrm{e}^{-\sqrt{i} \varphi (\xi - H(x))  } 
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right) 
+\right]
+ \left( \partial_x  + i \partial_y  \right)
+ \int_{\xi}^{0} b(x,z') \; dz' 
+ \; d \xi   \nonumber 
+\end{align}
+Now define $A(x,\xi)$ as
+\begin{align}
+A(x,\xi) & \equiv \mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \xi} - 
+\mathrm{e}^{\sqrt{i} \varphi H} 
+\right) \left(
+\mathrm{e}^{\sqrt{i} \varphi  \left( \xi + H \right)} - 1
+\right) + \mathrm{e}^{-\sqrt{i} \varphi (\xi - H)  } 
+\left( 1 + \mathrm{e}^{2 \sqrt{i} \varphi \xi}\right)   \nonumber \\
+& =
+\mathrm{e}^{-\sqrt{i} \varphi \xi} 
+\left(
+\mathrm{e}^{\sqrt{i} \varphi \left(2 \xi + H \right)} - 
+\mathrm{e}^{\sqrt{i} \varphi \left(\xi + 2 H\right)}
+- 
+\mathrm{e}^{\sqrt{i} \varphi \xi} +
+\mathrm{e}^{\sqrt{i} \varphi H} 
+\right) + \mathrm{e}^{-\sqrt{i} \varphi (\xi - H)  }  + 
+ \mathrm{e}^{\sqrt{i} \varphi \left( \xi + H \right)} \nonumber \\
+& =
+2 \mathrm{e}^{\sqrt{i} \varphi \left(\xi + H \right)} - 
+\mathrm{e}^{2 \sqrt{i} \varphi  H}
+- 
+1 +
+2 \mathrm{e}^{\sqrt{i} \varphi \left(H(x) - \xi\right)} 
+\nonumber .
+  \end{align}
+  Thus,
+ \begin{align}
+& 
+ \left( \partial_x  + i \partial_y  \right) p_s (x) \left[ \int_{-H(x)}^{0} 
+A(x,\xi) \; d \xi    + 
+ \left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)
+H(x) \right] \nonumber \\
+& = 
+\left(1 + \mathrm{e}^{2 \sqrt{i} \varphi H(x )} \right)
+\left[ 
+2 \tau_s (x) 
+ - H(x) \left( \partial_x + i \partial_y  \right)
+ \int_{-H(x)}^{0} b(x,z') \; dz'
+ +  \left( \partial_y  + i \partial_x  \right)
+ \int_{-H(x)}^0 z' b(x,z') \; dz'
+ \right]
+\nonumber \\
+ & -  \int_{-H(x)}^{0} 
+A(x, \xi)
+ \left( \partial_x  + i \partial_y  \right)
+ \int_{\xi}^{0} b(x,z') \; dz' 
+ \; d \xi   \nonumber .
+\end{align}  
+This needs checking!  See \texttt{PlanetaryGeostrophicTheory\_v0.1.ipynb}.
+
+This final expression is of the form
+\begin{align}
+ \left( \partial_x  + i \partial_y  \right) p_s (x) = \frac{C(x)}{D(x)} ,
+ \label{eqn:ps_diffeq}
+\end{align}
+where $C(x)$ is given by $\tau_s(x), b(x, z), H(x)$ and $D(x)$ is given by $H(x)$.
+The formal solution of (\ref{eqn:ps_diffeq}) is
+\begin{align}
+p_s(x,y) & = \int_0^{T(x,y)} \frac{C(x -t, y - i t)}{D(x -t, y - i t)} \; dt ,
+\end{align}
+or, equivalently (because $p_s$ is real)
+\begin{align}
+\nabla^2 p_s(x,y) & = \Re \left[ \left( \partial_x - i \partial_y \right) \left( \frac{A(x,y)}{B(x,y)} \right) \right] .
+\end{align}
+The boundary condition is that $p_s$ is a constant on the boundary and that the global integral of $p_s$ vanishes.
+
+Next steps are to solve for:
+\begin{enumerate}
+\item $b=0, H=1$ in an infinite plane.
+\item $b=0, H(x,y) = 1 - x^2 - y^2$ in a circular parabolic basin.
+\item $b(x,y)$ given by solving the vertical diffusive buoyancy equation and $H(x,y) = 1 - x^2 - y^2$ in a circular parabolic basin.
+\end{enumerate}
+
+
+\bibliographystyle{agu04}
+\bibliography{toms_bib}
+
+\end{document}  
