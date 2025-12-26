@@ -1,18 +1,18 @@
 SetFactory("Built-in");
 
 // Parameters
-resolution = 0.1; // Mesh resolution
+resolution = 0.05; // Mesh resolution
 r = 1.0;         // Circle radius
 xc = 2.5;        // Center of 2nd circle (x)
-corridorWidth = 0.25;  // Width of the corridor
+corridorWidth = 1.5;  // Width of the corridor
 corridorLength = xc - r; // x-distance from 1st circle edge to 2nd circle center
 corr_h = corridorWidth/2;
 int_pt = Sqrt(r^2 - corr_h^2);
 
 // --- First Circle Points
 Point(1) = {0, 0, 0, resolution};                 // Center 1
-Point(20) = {int_pt, corr_h, 0, resolution};
-Point(21) = {int_pt,-corr_h, 0, resolution};
+Point(20) = {int_pt, corr_h, 0, resolution/2};
+Point(21) = {int_pt,-corr_h, 0, resolution/2};
 Point(3) = {0, r, 0, resolution};                 // +y
 Point(4) = {-r, 0, 0, resolution};                // -x
 Point(5) = {0, -r, 0, resolution};                // -y
@@ -22,8 +22,8 @@ Point(6) = {xc, 0, 0, resolution};                // Center 2
 Point(7) = {xc + r, 0, 0, resolution};            // +x
 Point(8) = {xc, r, 0, resolution};                // +y
 Point(10) = {xc, -r, 0, resolution};              // -y
-Point(90) = {xc - int_pt, corr_h, 0, resolution};
-Point(91) = {xc - int_pt,-corr_h, 0, resolution};
+Point(90) = {xc - int_pt, corr_h, 0, resolution/2};
+Point(91) = {xc - int_pt,-corr_h, 0, resolution/2};
 
 // ---- First Circle Arcs
 Circle(1) = {20, 1, 3};

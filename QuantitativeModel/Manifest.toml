@@ -1451,9 +1451,9 @@ version = "1.0.0"
 
 [[deps.Infiltrator]]
 deps = ["InteractiveUtils", "Markdown", "REPL", "UUIDs"]
-git-tree-sha1 = "18f1522abfbf83510c31aa614c3a98bcff4b9e01"
+git-tree-sha1 = "d07c6718c1ce7324341947f8f608f5d69795dde5"
 uuid = "5903a43b-9cc3-4c30-8d17-598619ec4e9b"
-version = "1.9.6"
+version = "1.9.7"
 
 [[deps.Inflate]]
 git-tree-sha1 = "d1b1b796e47d94588b3757fe84fbf65a5ec4a80d"
