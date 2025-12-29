@@ -2,6 +2,25 @@ using Gmsh
 using GridapGmsh
 using Gridap
 using DelaunayTriangulation
+using LinearAlgebra
+
+function define_H_parameters(xc, r, hp, hm)
+    coeff_matrix = [  (  -r)^4   (  -r)^3   (  -r)^2 (  -r) 1;
+                        0          0          0        0    1;
+                      (xc/2)^4   (xc/2)^3   (xc/2)^2 (xc/2) 1;
+                      (xc  )^4   (xc  )^3   (xc  )^2 (xc  ) 1;
+                      (xc+r)^4   (xc+r)^3   (xc+r)^2 (xc+r) 1;
+                    ]
+    @info "Rank of coeff_matrix = $(rank(coeff_matrix)) (should be 5)"
+    rhs_vector = [0.0; hp; hm; hp; 0.0]
+    param_vec = coeff_matrix\rhs_vector
+    return param_vec
+end
+
+function compute_H(x, y, param_vec)
+    x4, x3, x2, x1, x0 = param_vec
+    return (x4*x^4 + x3*x^3 + x2*x^2 + x1*x + x0) * (1 - y^2)
+end
 
 function build_geometry_and_mesh(H, xc, r, res, GmshMeshFileName)
 	gmsh.initialize()
