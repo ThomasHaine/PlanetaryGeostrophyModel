@@ -1,8 +1,10 @@
 [deps]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 ClosedIntervals = "059b0e18-018a-5deb-a5b2-c624ee85784b"
+DelaunayTriangulation = "927a84f5-c5f4-47a5-9785-b46e178433df"
 DomainSets = "5b8099bc-c8ec-5219-889f-1d9e522a28bf"
 ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
+Gmsh = "705231aa-382f-11e9-3f0c-b7cb4346fdeb"
 Gridap = "56d4f2e9-7ea1-5844-9cf6-b9c51ca7ce8e"
 GridapGmsh = "3025c34a-b394-11e9-2a55-3fee550c04c8"
 GridapMakie = "41f30b06-6382-4b60-a5f7-79d86b35bf5d"

@@ -2,7 +2,7 @@
 
 julia_version = "1.12.3"
 manifest_format = "2.0"
-project_hash = "8b2b44234545085da56dc9782deffdf690b171f7"
+project_hash = "7b90b2d8b2a7ec043a73c741c9702891d80ec57f"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "8b2b045b22740e4be20654175cc38291d48539db"
@@ -1272,6 +1272,12 @@ version = "2.86.2+0"
 git-tree-sha1 = "83cb0092e2792b9e3a865b6655e88f5b862607e2"
 uuid = "c27321d9-0574-5035-807b-f59d2c89b15c"
 version = "1.4.0"
+
+[[deps.Gmsh]]
+deps = ["gmsh_jll"]
+git-tree-sha1 = "6d815101e62722f4e323514c9fc704007d4da2e3"
+uuid = "705231aa-382f-11e9-3f0c-b7cb4346fdeb"
+version = "0.3.1"
 
 [[deps.Graphene_jll]]
 deps = ["Artifacts", "Glib_jll", "JLLWrappers", "Libdl"]
