@@ -1067,9 +1067,9 @@ weakdeps = ["PDMats", "SparseArrays", "Statistics"]
 
 [[deps.FindFirstFunctions]]
 deps = ["PrecompileTools"]
-git-tree-sha1 = "bcefa2a6e8e489a3e07ff0eb422b83049b374701"
+git-tree-sha1 = "83523f63cf4e1dff36836a103014e5e1b94061b6"
 uuid = "64ca27bc-2ba2-4a57-88aa-44e436879224"
-version = "1.5.0"
+version = "1.6.0"
 
 [[deps.FiniteDiff]]
 deps = ["ArrayInterface", "LinearAlgebra", "Setfield"]
@@ -3225,9 +3225,9 @@ version = "7.8.3+2"
 
 [[deps.Surrogates]]
 deps = ["ChainRulesCore", "Distributions", "ExtendableSparse", "GLM", "IterativeSolvers", "LinearAlgebra", "PrecompileTools", "QuasiMonteCarlo", "Random", "SparseArrays", "Statistics", "SurrogatesBase", "Zygote"]
-git-tree-sha1 = "ce934916c9b9c6d3b7feacebb5551dc75f66f6aa"
+git-tree-sha1 = "838d618834e76e6df4255958f454375422144b40"
 uuid = "6fc51010-71bc-11e9-0e15-a3fcc6593c49"
-version = "7.2.0"
+version = "7.3.0"
 
     [deps.Surrogates.extensions]
     SurrogatesAbstractGPsExt = "AbstractGPs"

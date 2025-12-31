@@ -42,39 +42,24 @@ function compute_Cassini_oval(b, num_points)
 	points = []
 	for θ in θs
 		# Solve r^4 - 2*a^2*cos(2θ)*r^2 + (a^4 - b^4) = 0 for r >= 0
-		r_poly = Polynomial([1, 0, -2*cos(2*θ), 0, 1 - b^4])
+		r_poly = Polynomial([1 - b^4, 0, -2*cos(2*θ), 0, 1])
 		rts = roots(r_poly) 
 		rs = [real(r) for r in rts if isreal(r) && real(r) > 0]
 		if length(rs) == 0
 			error("No positive real root found for the given parameter: b=$b")
 		end
 		r = minimum(rs)  # Choose the smallest positive root
-		push!(points,[r * sin(θ),r * cos(θ)])
+		push!(points,[r * cos(θ),r * sin(θ)])
 	end
 	return reduce(hcat, points)'
-	# return reduce(hcat, tmp)'
 end	
 
 function compute_Cassini_oval_H(x, y, hi_b)
-	
 	factor = 1.0
 	θ = atan(y, x)
 	this_r = sqrt(x^2 + y^2)
 	this_b = (this_r^4 - 2*factor*cos(2*θ)*this_r^2 + 1)^(1/4)
-
-	# H = max(hi_b - this_b, 0.0)
-	H = this_b
-
-	# if false
-	# 	θ = 0.0
-	# 	# θ = sqrt(atan(y, x)^2 + min_θ^2)
-	# 	rs = range(0.0, 2.0, 256)
-	# 	# bs = [(r^4 - 2*a^2*cos(2*θ)*r^2 + a^4)^(1/4) for r in rs]
-	# 	bs = [(r^4 - 1.8*a^2*cos(2*θ)*r^2 + a^4)^(1/4) for r in rs]
-	# 	# @infiltrate()
-	# 	plot(rs, bs, xlabel="r", ylabel="b", title="Cassini oval b vs r at θ=($θ)")
-		
-	# end
+	H = hi_b - this_b
 	return H
 end
 
@@ -102,9 +87,9 @@ function build_geometry_and_mesh(H, hi_b, res, GmshMeshFileName)
 	for j in 1:ny, i in 1:nx
 		x = Xs[i]
 		y = Ys[j]
-		# if H(x, y) > 0.0
+		if H(x, y) > 0.0
 			push!(points_xy, (x, y))
-		# end
+		end
 	end
 
 	# Delaunay triangulation (coords_mat has shape Npoints × 2)
@@ -127,7 +112,6 @@ function build_geometry_and_mesh(H, hi_b, res, GmshMeshFileName)
 		push!(line_tags, line_tag)
 	end
 	occ.synchronize()
-	gmsh.fltk.run()
 
 	# Add points at the bottom of the reservoir
 	bottom_element_tags = []
