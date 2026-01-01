@@ -8,62 +8,55 @@ using Polynomials
 using Infiltrator
 using Plots
 
-function define_H_parameters(xc, r, hp, hm)
-	# Set up and solve the linear system to find the coefficients of the quartic polynomial
-	# H(x,0) = a4*x^4 + a3*x^3 + a2*x^2 + a1*x + a0
-	# such that:
-	# H(-r,0) = 0
-	# H(0,0) = hp
-	# H(xc/2,0) = hm
-	# H(xc,0) = hp
-	# H(xc+r,0) = 0
-	# This gives 5 equations for the 5 unknown coefficients [a4, a3, a2, a1, a0].
-    coeff_matrix = [  (  -r)^4   (  -r)^3   (  -r)^2 (  -r) 1;
-                        0          0          0        0    1;
-                      (xc/2)^4   (xc/2)^3   (xc/2)^2 (xc/2) 1;
-                      (xc  )^4   (xc  )^3   (xc  )^2 (xc  ) 1;
-                      (xc+r)^4   (xc+r)^3   (xc+r)^2 (xc+r) 1;
-                    ]
-    @info "Rank of coeff_matrix = $(rank(coeff_matrix)) (should be 5)"
-    rhs_vector = [0.0; hp; hm; hp; 0.0]
-    param_vec = coeff_matrix\rhs_vector
-    return param_vec
-end
+# Bathymetry function parameters:
+x1, y1 = -1.0, 0.0; x2, y2 = 1.0, 0.0	# Basin centers:
+xsaddle, ysaddle = 0.0, 0.0  # Saddle center:
+R = 2.0            # domain radius
+p = 2              # boundary steepness
+σ = 1.0            # basin width
+H_saddle = 0.9	   # depth at saddle point
 
-function compute_H(x, y, param_vec)
-	# Evaluate H(x,y) = P(x)*(1 - y^2), where P(x) is the quartic polynomial
-	# defined by the coefficients in param_vec
-    x4, x3, x2, x1, x0 = param_vec
-    return (x4*x^4 + x3*x^3 + x2*x^2 + x1*x + x0) * (1 - y^2)
-end
+function H_Gaussian(x, y)
+# Function to compute depth H(x,y) with three Gaussian basins g(x,y) = a*g1(x,y) + b*g2(x,y) + c*gs(x,y)
+	gauss(x, y, xc, yc) = exp(-((x - xc)^2 + (y - yc)^2)/σ^2)
+	function find_weights()
+    	# Find weights such that:
+    	# at (x1,y1): 			g = a*g1 + b*g2 + c*gs = 1
+		# at (x2,y2): 			g = a*g1 + b*g2 + c*gs = 1
+		# at (xsaddle,ysaddle): g = a*g1 + b*g2 + c*gs = H_saddle
+		g11 = gauss(x1, y1, x1, y1)
+		g12 = gauss(x1, y1, x2, y2)
+		g1s = gauss(x1, y1, xsaddle, ysaddle)
+    	
+		g21 = gauss(x2, y2, x1, y1)
+		g22 = gauss(x2, y2, x2, y2)
+		g2s = gauss(x2, y2, xsaddle, ysaddle)
 
-function compute_Cassini_oval(b, num_points)
-	θs = range(0, 2π, length=num_points)
-	points = []
-	for θ in θs
-		# Solve r^4 - 2*a^2*cos(2θ)*r^2 + (a^4 - b^4) = 0 for r >= 0
-		r_poly = Polynomial([1 - b^4, 0, -2*cos(2*θ), 0, 1])
-		rts = roots(r_poly) 
-		rs = [real(r) for r in rts if isreal(r) && real(r) > 0]
-		if length(rs) == 0
-			error("No positive real root found for the given parameter: b=$b")
-		end
-		r = minimum(rs)  # Choose the smallest positive root
-		push!(points,[r * cos(θ),r * sin(θ)])
+		gs1 = gauss(xsaddle, ysaddle, x1, y1)
+		gs2 = gauss(xsaddle, ysaddle, x2, y2)
+		gss = gauss(xsaddle, ysaddle, xsaddle, ysaddle)
+
+    	A = [g11 g12 g1s; g21 g22 g2s; gs1 gs2 gss]
+    	bvec = [1, 1, H_saddle]				
+    	coeffs = A \ bvec
+    	return coeffs
 	end
-	return reduce(hcat, points)'
-end	
 
-function compute_Cassini_oval_H(x, y, hi_b)
-	factor = 1.0
-	θ = atan(y, x)
-	this_r = sqrt(x^2 + y^2)
-	this_b = (this_r^4 - 2*factor*cos(2*θ)*this_r^2 + 1)^(1/4)
-	H = hi_b - this_b
-	return H
+	weights = find_weights()
+    r = sqrt(x^2 + y^2)
+    f_boundary = 1.0 - (r/R)^p
+    return f_boundary * (weights[1]*gauss(x, y, x1, y1) + weights[2]*gauss(x, y, x2, y2) + weights[3]*gauss(x, y, xsaddle, ysaddle))
 end
 
-function build_geometry_and_mesh(H, hi_b, res, GmshMeshFileName)
+function compute_boundary_points(R)
+	thetas = range(0, 2π, length=128)
+	xb = R * cos.(thetas)
+	yb = R * sin.(thetas)
+	pts = hcat(xb, yb)
+	return pts
+end
+
+function build_geometry_and_mesh(H, res, GmshMeshFileName)
 	gmsh.initialize()
 	model = gmsh.model
 	occ = model.occ
@@ -76,10 +69,11 @@ function build_geometry_and_mesh(H, hi_b, res, GmshMeshFileName)
 	nx, ny = 32, 16
 	
 	# Boundary points:
-	boundary_pts = compute_Cassini_oval(hi_b, 128)
+	boundary_pts = compute_boundary_points(R)
 	xmin, xmax = minimum(boundary_pts[:,1]), maximum(boundary_pts[:,1])
 	ymin, ymax = minimum(boundary_pts[:,2]), maximum(boundary_pts[:,2])
 	@info "Boundary x-range: [$xmin, $xmax], y-range: [$ymin, $ymax]"
+
 	# Generate points inside the domain where H(x,y) > 0
     Xs = collect(range(xmin, xmax, length = nx))
 	Ys = collect(range(ymin, ymax, length = ny))
@@ -119,7 +113,7 @@ function build_geometry_and_mesh(H, hi_b, res, GmshMeshFileName)
 		push!(bottom_element_tags, occ.addPoint(x, y, -H(x,y), res, -1))
 	end
 	occ.synchronize()
-	gmsh.fltk.run()
+	# gmsh.fltk.run()
 
 	# Close the loop
 	cl_tag = occ.addCurveLoop(line_tags)
