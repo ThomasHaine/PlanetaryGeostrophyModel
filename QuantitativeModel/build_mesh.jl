@@ -62,6 +62,7 @@ function build_geometry_and_mesh(H, res, GmshMeshFileName)
 	occ = model.occ
 	gmsh.option.setNumber("General.Terminal", 1)
 	gmsh.option.setNumber("Geometry.OCCUnionUnify", 0)     # This is important. 
+	gmsh.option.setNumber("General.Verbosity", 2)
 	model.add("Reservoir")
 
 	# Parameters
